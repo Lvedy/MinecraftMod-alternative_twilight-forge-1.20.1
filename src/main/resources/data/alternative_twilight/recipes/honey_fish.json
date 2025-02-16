@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "minecraft:honeycomb"
+    },
+    "&": {
+      "item": "minecraft:tropical_fish"
+    }
+  },
+  "pattern": [
+    "###",
+    "#&#",
+    "###"
+  ],
+  "result": {
+    "item": "alternative_twilight:honey_fish",
+    "count": 1
+  }
+}

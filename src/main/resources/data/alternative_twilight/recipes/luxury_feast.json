@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "alternative_twilight:honey_fish"
+    },
+    {
+      "item": "minecraft:rabbit_stew"
+    },
+    {
+      "item": "minecraft:pumpkin_pie"
+    }
+  ],
+  "result": {
+    "item": "alternative_twilight:luxury_feast"
+  }
+}

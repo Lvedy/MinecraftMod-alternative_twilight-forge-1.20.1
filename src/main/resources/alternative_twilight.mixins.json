@@ -1,0 +1,28 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.lvedy.alternative_twilight.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "refmap": "examplemod.refmap.json",
+  "mixins": [
+    "AlphaYeti.AlphaYetiMixin",
+    "Hydra.HydraMixin",
+    "KnightPhantom.KnightPhantomMixin",
+    "Lich.LichMinionMixin",
+    "Lich.LichMixin",
+    "Lich.LichShadowsGoalMixin",
+    "Minoshroom.MeleeAttackGoalMixin",
+    "Minoshroom.MinoshroomMixin",
+    "Naga.Inventory",
+    "Naga.Naga",
+    "Naga.NagaSegment",
+    "SnowQueen.SnowQueenMixin",
+    "UrGhast.UrGhastMixin"
+  ],
+  "client": [
+    "Lich.LichRenderMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
