@@ -3,7 +3,7 @@
   "minVersion": "0.8",
   "package": "com.lvedy.alternative_twilight.mixin",
   "compatibilityLevel": "JAVA_17",
-  "refmap": "examplemod.refmap.json",
+  "refmap": "alternative_twilight.refmap.json",
   "mixins": [
     "AlphaYeti.AlphaYetiMixin",
     "Hydra.HydraMixin",

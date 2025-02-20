@@ -206,7 +206,7 @@ tasks.named('jar', Jar).configure {
                 'Implementation-Timestamp': new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
         ])
     }
-
+    rename   'mixin.refmap.json','alternative_twilight.refmap.json'
     // This is the preferred method to reobfuscate your jar file
     finalizedBy 'reobfJar'
 }

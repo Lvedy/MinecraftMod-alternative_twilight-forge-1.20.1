@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import twilightforest.entity.boss.Minoshroom;
 
-@Mixin(MeleeAttackGoal.class)
+@Mixin(value = MeleeAttackGoal.class)
 public class MeleeAttackGoalMixin extends Goal {
     @Shadow
     protected PathfinderMob mob;
