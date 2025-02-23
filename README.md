@@ -1,1 +1,1 @@
-这里没东西
+配置文件是ATModConfig.properties

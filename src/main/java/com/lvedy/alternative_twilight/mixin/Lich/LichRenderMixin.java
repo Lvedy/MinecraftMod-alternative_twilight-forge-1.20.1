@@ -13,7 +13,7 @@ import twilightforest.client.model.entity.LichModel;
 import twilightforest.client.renderer.entity.LichRenderer;
 import twilightforest.entity.boss.Lich;
 
-@Mixin(LichRenderer.class)
+@Mixin(value = LichRenderer.class, priority = 7)
 public class LichRenderMixin extends HumanoidMobRenderer<Lich, LichModel> {
     private static final ResourceLocation LICH_TEXTURE = TwilightForestMod.getModelTexture("twilightlich64.png");
 
