@@ -1,5 +1,6 @@
 package com.lvedy.alternative_twilight.mixin.Lich;
 
+import com.lvedy.alternative_twilight.ATModFinal;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -26,7 +27,7 @@ import twilightforest.entity.boss.Lich;
 import java.util.List;
 import java.util.function.Predicate;
 
-@Mixin(LichShadowsGoal.class)
+@Mixin(value = LichShadowsGoal.class, priority = 7)
 public class LichShadowsGoalMixin extends Goal {
     @Unique
     private static final Predicate<Entity> IS_NOT_SELF = Entity::isAlive;
@@ -44,8 +45,8 @@ public class LichShadowsGoalMixin extends Goal {
             Lich Target = this.lich;
             if(this.lich.getMasterLich() != null)
                 Target = this.lich.getMasterLich();
-            Target.getAttribute(Attributes.MAX_HEALTH).setBaseValue(this.lich.getAttribute(Attributes.MAX_HEALTH).getBaseValue()+20);
-            Target.setHealth(Target.getHealth() + 20);
+            Target.getAttribute(Attributes.MAX_HEALTH).setBaseValue(this.lich.getAttribute(Attributes.MAX_HEALTH).getBaseValue()+ATModFinal.LichObsidianHealth);
+            Target.setHealth(Target.getHealth() + ATModFinal.LichObsidianHealth);
             pCompound.putFloat("Obsidian", pCompound.getFloat("Obsidian") - 1);
         }
         if (pCompound.contains("Obsidian") && pCompound.getFloat("Obsidian") == 0){
@@ -86,13 +87,15 @@ public class LichShadowsGoalMixin extends Goal {
                         }
                     }
                 }
-                pCompound.putFloat("Obsidian", 300);
+                pCompound.putFloat("Obsidian", ATModFinal.LichObsidian);
             }
         }
     }
 
     @Override
     public boolean canUse() {
-        return this.lich.getPhase() == 1;
+        if (ATModFinal.LichModify == 1)
+            return this.lich.getPhase() == 1;
+        return false;
     }
 }

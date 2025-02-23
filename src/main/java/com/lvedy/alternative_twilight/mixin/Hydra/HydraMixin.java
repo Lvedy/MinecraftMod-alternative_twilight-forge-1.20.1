@@ -1,5 +1,6 @@
 package com.lvedy.alternative_twilight.mixin.Hydra;
 
+import com.lvedy.alternative_twilight.ATModFinal;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -24,7 +25,7 @@ import twilightforest.init.TFMobEffects;
 import java.util.List;
 import java.util.function.Predicate;
 
-@Mixin(Hydra.class)
+@Mixin(value = Hydra.class, priority = 7)
 public abstract class HydraMixin extends Mob {
     @Shadow public abstract boolean hurt(DamageSource src, float damage);
 
@@ -37,48 +38,54 @@ public abstract class HydraMixin extends Mob {
 
     @Inject(method = "aiStep", at=@At("HEAD"))
     public void aiStep(CallbackInfo ci){
-        CompoundTag pCompound = this.getPersistentData();
-        if (!pCompound.contains("BombTime"))
-            pCompound.putInt("BombTime", 400);
-        List<Player> list = this.level().getEntitiesOfClass(Player.class, this.getBoundingBox().inflate(40), IS_NOT_SELF);
-        for (Player player : list){
-            if(pCompound.getInt("BombTime") == 0 && player.isOnFire()) {
-                player.level().explode(this, player.getX(), player.getY(), player.getZ(), 2.0F, false, Level.ExplosionInteraction.MOB);
-                pCompound.putInt("BombTime", 400);
+        if (ATModFinal.HydraModify == 1) {
+            CompoundTag pCompound = this.getPersistentData();
+            if (!pCompound.contains("BombTime"))
+                pCompound.putInt("BombTime", ATModFinal.HydraBomb);
+            List<Player> list = this.level().getEntitiesOfClass(Player.class, this.getBoundingBox().inflate(40), IS_NOT_SELF);
+            for (Player player : list) {
+                if (pCompound.getInt("BombTime") == 0 && player.isOnFire()) {
+                    player.level().explode(this, player.getX(), player.getY(), player.getZ(), 2.0F, false, Level.ExplosionInteraction.MOB);
+                    pCompound.putInt("BombTime", ATModFinal.HydraBomb);
+                } else if (player.isOnFire()) {
+                    pCompound.putInt("BombTime", pCompound.getInt("BombTime") - 1);
+                    break;
+                }
             }
-            else if(player.isOnFire()){
-                pCompound.putInt("BombTime", pCompound.getInt("BombTime") - 1);
-                break;
-            }
+            int i = pCompound.getByte("NumHeads");
+            if (i >= 5)
+                this.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 140, i - 5));
+            this.addAdditionalSaveData(pCompound);
+            this.readAdditionalSaveData(pCompound);
         }
-        int i = pCompound.getByte("NumHeads");
-        if(i >= 5)
-            this.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 140, i - 5));
-        this.addAdditionalSaveData(pCompound);
-        this.readAdditionalSaveData(pCompound);
     }
 
     @Inject(method = "hurt", at = @At("HEAD"))
     public void hurt(DamageSource src, float damage, CallbackInfoReturnable<Boolean> cir){
-        CompoundTag pCompound = this.getPersistentData();
-        if (src.getEntity() instanceof Player){
-            float luck = ((Player) src.getEntity()).getLuck();
-            float i = 0.1F * this.getRandom().nextInt(7) - 3 + (2*luck);
-            pCompound.putFloat("ExtraDamage", (1 + i));
+        if (ATModFinal.HydraModify == 1) {
+            CompoundTag pCompound = this.getPersistentData();
+            if (src.getEntity() instanceof Player) {
+                float luck = ((Player) src.getEntity()).getLuck();
+                float i = 0.1F * this.getRandom().nextInt(7) - 3 + (2 * luck);
+                pCompound.putFloat("ExtraDamage", (1 + i));
+            }
+            this.addAdditionalSaveData(pCompound);
+            this.readAdditionalSaveData(pCompound);
         }
-        this.addAdditionalSaveData(pCompound);
-        this.readAdditionalSaveData(pCompound);
     }
 
     @ModifyArg(method = "hurt", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Mob;hurt(Lnet/minecraft/world/damagesource/DamageSource;F)Z"), index = 1)
-    public float Hurt(float par1){
-        CompoundTag pCompound = this.getPersistentData();
-        if(pCompound.contains("ExtraDamage")) {
-            par1 *= pCompound.getFloat("ExtraDamage");
-            pCompound.putFloat("ExtraDamage", 1.0F);
+    public float Hurt(float par1) {
+        if (ATModFinal.HydraModify == 1) {
+            CompoundTag pCompound = this.getPersistentData();
+            if (pCompound.contains("ExtraDamage")) {
+                par1 *= pCompound.getFloat("ExtraDamage");
+                pCompound.putFloat("ExtraDamage", 1.0F);
+            }
+            this.addAdditionalSaveData(pCompound);
+            this.readAdditionalSaveData(pCompound);
+            return par1;
         }
-        this.addAdditionalSaveData(pCompound);
-        this.readAdditionalSaveData(pCompound);
         return par1;
     }
 }
