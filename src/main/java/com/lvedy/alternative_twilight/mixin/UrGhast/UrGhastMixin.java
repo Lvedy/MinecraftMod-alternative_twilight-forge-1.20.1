@@ -42,8 +42,6 @@ public class UrGhastMixin extends CarminiteGhastguard {
             CompoundTag pCompound = this.getPersistentData();
             if (source.is(DamageTypes.EXPLOSION))
                 pCompound.putBoolean("WasExplosion", true);
-            this.addAdditionalSaveData(pCompound);
-            this.readAdditionalSaveData(pCompound);
         }
     }
 
@@ -55,8 +53,6 @@ public class UrGhastMixin extends CarminiteGhastguard {
                 pCompound.putBoolean("WasExplosion", false);
                 par2 = Math.max(ATModFinal.UrGhastDamageMin, par2) * (1 + (0.01F * ATModFinal.UrGhastAddDamage));
             }
-            this.addAdditionalSaveData(pCompound);
-            this.readAdditionalSaveData(pCompound);
             return par2;
         }
         return par2;
@@ -71,7 +67,6 @@ public class UrGhastMixin extends CarminiteGhastguard {
             if (!this.isAlive() && pCompound.contains("DeadTime")) {
                 int DeadTime = pCompound.getInt("DeadTime");
                 pCompound.putInt("DeadTime", DeadTime + 1);
-                ParticlePacket particlePacket = new ParticlePacket();
                 for (int i = 0; i < 360; i++) {
                     Vec3 vec3 = this.position();
                     Vec3 vec31 = vec3.add(Math.cos(i) * (15 - 0.3 * DeadTime), 8, Math.sin(i) * (15 - 0.2 * DeadTime));
@@ -92,8 +87,6 @@ public class UrGhastMixin extends CarminiteGhastguard {
                     }
                 }
             }
-            this.addAdditionalSaveData(pCompound);
-            this.readAdditionalSaveData(pCompound);
         }
     }
 }

@@ -25,7 +25,7 @@ import twilightforest.entity.boss.Lich;
 import java.util.List;
 import java.util.function.Predicate;
 
-@Mixin(value = KnightPhantom.class, priority = 7)
+@Mixin(value = KnightPhantom.class)
 public abstract class KnightPhantomMixin extends FlyingMob {
     @Unique
     private static final Predicate<Entity> IS_NOT_SELF = Entity::isAlive;
@@ -59,8 +59,6 @@ public abstract class KnightPhantomMixin extends FlyingMob {
                 for (LivingEntity entity : list)
                     entity.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, ATModFinal.KnightDuration, ATModFinal.KnightAmplifier));
             }
-            this.addAdditionalSaveData(pCompound);
-            this.readAdditionalSaveData(pCompound);
         }
     }
 }

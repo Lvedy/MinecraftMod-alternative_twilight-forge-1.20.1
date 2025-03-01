@@ -55,8 +55,6 @@ public abstract class HydraMixin extends Mob {
             int i = pCompound.getByte("NumHeads");
             if (i >= 5)
                 this.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 140, i - 5));
-            this.addAdditionalSaveData(pCompound);
-            this.readAdditionalSaveData(pCompound);
         }
     }
 
@@ -69,8 +67,6 @@ public abstract class HydraMixin extends Mob {
                 float i = 0.1F * this.getRandom().nextInt(7) - 3 + (2 * luck);
                 pCompound.putFloat("ExtraDamage", (1 + i));
             }
-            this.addAdditionalSaveData(pCompound);
-            this.readAdditionalSaveData(pCompound);
         }
     }
 
@@ -82,8 +78,6 @@ public abstract class HydraMixin extends Mob {
                 par1 *= pCompound.getFloat("ExtraDamage");
                 pCompound.putFloat("ExtraDamage", 1.0F);
             }
-            this.addAdditionalSaveData(pCompound);
-            this.readAdditionalSaveData(pCompound);
             return par1;
         }
         return par1;

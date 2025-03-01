@@ -92,8 +92,6 @@ public class SnowQueenMixin extends Monster {
                 if (mobEffectInstance != null)
                     entity.hurt(this.damageSources().magic(), entity.getMaxHealth() * 0.01F * ATModFinal.SnowQueenDamage);
             }
-            this.addAdditionalSaveData(pCompound);
-            this.readAdditionalSaveData(pCompound);
         }
     }
 }

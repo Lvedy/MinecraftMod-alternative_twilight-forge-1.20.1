@@ -38,8 +38,6 @@ import java.util.function.Predicate;
 
 @Mixin(value = AlphaYeti.class, priority = 7)
 public abstract class AlphaYetiMixin extends Monster {
-    @Shadow public abstract boolean isTired();
-
     @Shadow public abstract boolean isRampaging();
 
     @Unique

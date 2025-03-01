@@ -3,10 +3,10 @@ package com.lvedy.alternative_twilight.mixin.Lich;
 import com.lvedy.alternative_twilight.ATModFinal;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.Component;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.monster.Monster;
@@ -136,7 +136,7 @@ public abstract class LichMixin extends Monster {
                     List<Lich> list = this.level().getEntitiesOfClass(Lich.class, this.getBoundingBox().inflate(2), IS_NOT_SELF);
                     for (Lich lich : list) {
                         if (lich.getTarget() != null && lich.level() instanceof ServerLevelAccessor accessor) {
-                            Vec3 minionSpot = lich.findVecInLOSOf(lich.getTarget());
+                            Vec3 minionSpot = aTMod_forge_1_20_1$findVec(lich, lich.getTarget());
                             LichMinion minion = new LichMinion(TFEntities.LICH_MINION.get(), this.level());
                             minion.setPos(minionSpot.x(), minionSpot.y(), minionSpot.z());
                             minion.getAttribute(Attributes.ARMOR).setBaseValue(ATModFinal.MinionArmor);
@@ -158,5 +158,28 @@ public abstract class LichMixin extends Monster {
             this.addAdditionalSaveData(pCompound);
             this.readAdditionalSaveData(pCompound);
         }
+    }
+
+    @Unique
+    public Vec3 aTMod_forge_1_20_1$findVec(Lich lich, LivingEntity targetEntity){
+        double origX = lich.getX();
+        double origY = lich.getY();
+        double origZ = lich.getZ();
+        int tries = 100;
+        for (int i = 0; i < tries; i++) {
+            // we abuse LivingEntity.attemptTeleport, which does all the collision/ground checking for us, then teleport back to our original spot
+            double tx = targetEntity.getX() + lich.getRandom().nextGaussian() * 16D;
+            double ty = targetEntity.getY();
+            double tz = targetEntity.getZ() + lich.getRandom().nextGaussian() * 16D;
+
+            boolean destClear = lich.randomTeleport(tx, ty, tz, true);
+            boolean canSeeTargetAtDest = lich.hasLineOfSight(targetEntity); // Don't use senses cache because we're in a temporary position
+            lich.teleportTo(origX, origY, origZ);
+
+            if (destClear && canSeeTargetAtDest) {
+                return new Vec3(tx, ty, tz);
+            }
+        }
+        return new Vec3(origX, origY, origZ);
     }
 }
