@@ -183,8 +183,8 @@ public abstract class Naga extends Monster {
                     this.level().addFreshEntity(entity);
                     pCompound.putFloat("BreakTime", 6000);
                     pCompound.putFloat("BreakHead", 0);
-                    this.addAdditionalSaveData(pCompound);
-                    this.readAdditionalSaveData(pCompound);
+                    //this.addAdditionalSaveData(pCompound);
+                    //this.readAdditionalSaveData(pCompound);
                 }
                 if (pCompound.contains("BreakTime")) {
                     float i = pCompound.getFloat("BreakTime");

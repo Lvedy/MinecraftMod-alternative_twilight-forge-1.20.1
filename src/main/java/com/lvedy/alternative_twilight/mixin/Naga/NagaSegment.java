@@ -27,8 +27,8 @@ public class NagaSegment extends TFPart<Naga> {
                     pCompound.putFloat("BreakHead", pCompound.getFloat("BreakHead") - damage);
                 else
                     pCompound.putFloat("BreakHead", -damage);
-                this.getParent().addAdditionalSaveData(pCompound);
-                this.getParent().readAdditionalSaveData(pCompound);
+                //this.getParent().addAdditionalSaveData(pCompound);
+                //this.getParent().readAdditionalSaveData(pCompound);
             }
         }
     }

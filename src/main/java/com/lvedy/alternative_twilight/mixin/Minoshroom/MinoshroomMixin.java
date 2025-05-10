@@ -42,8 +42,8 @@ public abstract class MinoshroomMixin extends Minotaur {
                 pCompound.putFloat("ExtraDamage", (1 - ATModFinal.MinoshroomReduceDamage/100F));
             else
                 pCompound.putFloat("ExtraDamage", (1 + ATModFinal.MinoshroomAddDamage/100F));
-            this.addAdditionalSaveData(pCompound);
-            this.readAdditionalSaveData(pCompound);
+            //this.addAdditionalSaveData(pCompound);
+            //this.readAdditionalSaveData(pCompound);
         }
     }
 
@@ -55,8 +55,8 @@ public abstract class MinoshroomMixin extends Minotaur {
                 par1 *= pCompound.getFloat("ExtraDamage");
                 pCompound.putFloat("ExtraDamage", 1.0F);
             }
-            this.addAdditionalSaveData(pCompound);
-            this.readAdditionalSaveData(pCompound);
+            //this.addAdditionalSaveData(pCompound);
+            //this.readAdditionalSaveData(pCompound);
             return par1;
         }
         return par1;
@@ -80,8 +80,8 @@ public abstract class MinoshroomMixin extends Minotaur {
                     entity.push(vec33.x() * 1.5D, 0.2D, vec33.z() * 1.5D);
                 }
             }
-            this.addAdditionalSaveData(pCompound);
-            this.readAdditionalSaveData(pCompound);
+            //this.addAdditionalSaveData(pCompound);
+            //this.readAdditionalSaveData(pCompound);
         }
     }
 }

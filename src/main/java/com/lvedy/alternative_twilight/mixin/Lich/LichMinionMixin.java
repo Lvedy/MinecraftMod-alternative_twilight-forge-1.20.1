@@ -37,8 +37,8 @@ public class LichMinionMixin extends Zombie {
                     master.setHealth((float) Math.max(1, master.getHealth() - (master.getMaxHealth() * 0.01 * ATModFinal.MinionDamageLich * (1 + Math.max(Math.min(0.2 * pCompound.getInt("resistance"), 0.8), -0.4)))));
                 }
             }
-            this.addAdditionalSaveData(pCompound);
-            this.readAdditionalSaveData(pCompound);
+            //this.addAdditionalSaveData(pCompound);
+            //this.readAdditionalSaveData(pCompound);
             if (pCompound.contains("Stronger") && pCompound.getBoolean("Stronger")) {
                 super.aiStep();
                 ci.cancel();

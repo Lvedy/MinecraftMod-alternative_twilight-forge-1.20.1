@@ -31,6 +31,7 @@ public class ATModFinal {
     public static final int NagaStop = Integer.parseInt(properties.getProperty("NagaStop"));
     public static final int NagaReduceDamage1 = Integer.parseInt(properties.getProperty("NagaReduceDamage1"));
     public static final int NagaReduceDamage2 = Integer.parseInt(properties.getProperty("NagaReduceDamage2"));
+    public static final int LichObsidianSwitch = Integer.parseInt(properties.getProperty("LichObsidianSwitch"));
     public static final int LichObsidian = Integer.parseInt(properties.getProperty("LichObsidian"));
     public static final int LichObsidianHealth = Integer.parseInt(properties.getProperty("LichObsidianHealth"));
     public static final int MagicHealth = Integer.parseInt(properties.getProperty("MagicHealth"));
