@@ -20,7 +20,8 @@
     "UrGhast.UrGhastMixin"
   ],
   "client": [
-    "Lich.LichRenderMixin"
+    "Lich.LichRenderMixin",
+    "SnowQueen.SnowQueenRenderMixin"
   ],
   "injectors": {
     "defaultRequire": 1

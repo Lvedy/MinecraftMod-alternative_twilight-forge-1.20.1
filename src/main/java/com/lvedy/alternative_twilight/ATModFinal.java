@@ -68,10 +68,16 @@ public class ATModFinal {
     public static final int YetiSnowBox = Integer.parseInt(properties.getProperty("YetiSnowBox"));
     public static final int YetiIce = Integer.parseInt(properties.getProperty("YetiIce"));
     public static final int SnowQueenTrapCD = Integer.parseInt(properties.getProperty("SnowQueenTrapCD"));
+    public static final double SnowQueenTrapCDCD = Double.parseDouble(properties.getProperty("SnowQueenTrapCDCD"));
+    public static final int SnowQueenTrapCount_1 = Integer.parseInt(properties.getProperty("SnowQueenTrapCount_1"));
+    public static final int SnowQueenTrapCount_2 = Integer.parseInt(properties.getProperty("SnowQueenTrapCount_2"));
     public static final int SnowQueenHealthThreshold = Integer.parseInt(properties.getProperty("SnowQueenHealthThreshold"));
     public static final int SnowQueenIceCD = Integer.parseInt(properties.getProperty("SnowQueenIceCD"));
-    public static final int SnowQueenDuration = Integer.parseInt(properties.getProperty("SnowQueenDuration"));
-    public static final int SnowQueenAmplifier = Integer.parseInt(properties.getProperty("SnowQueenAmplifier"));
+    public static final int SnowQueenInvincible = Integer.parseInt(properties.getProperty("SnowQueenInvincible"));
+    public static final int SnowQueenTreat = Integer.parseInt(properties.getProperty("SnowQueenTreat"));
     public static final int SnowQueenIceDuration = Integer.parseInt(properties.getProperty("SnowQueenIceDuration"));
     public static final int SnowQueenDamage = Integer.parseInt(properties.getProperty("SnowQueenDamage"));
+    public static final float SnowQueenExplosionDamage = Float.parseFloat(properties.getProperty("SnowQueenExplosionDamage"));
+    public static final int SnowQueenIceArmor = Integer.parseInt(properties.getProperty("SnowQueenIceArmor"));
+    public static final int SnowTrapScale = Integer.parseInt(properties.getProperty("SnowTrapScale"));
 }
