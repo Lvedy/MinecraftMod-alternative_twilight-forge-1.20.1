@@ -47,7 +47,7 @@ public abstract class LichMixin extends Monster {
     public void hurt(DamageSource src, float damage, CallbackInfoReturnable<Boolean> cir){
         if (ATModFinal.LichModify == 1) {
             CompoundTag pCompound = this.getPersistentData();        //被攻击取消黑曜石囚笼回血
-            if (ATModFinal.LichObsidianSwitch == 1 && this.getPhase() == 1 && pCompound.contains("Obsidian"))
+            if (ATModFinal.LichObsidianSwitch == 1 && this.getPhase() == 1 && pCompound.contains("Obsidian") && pCompound.getFloat("Obsidian") > 0)
                 pCompound.putFloat("Obsidian", 0);
             if (pCompound.contains("ExtraArmor") && pCompound.getFloat("ExtraArmor") > 0)//护体法术期间被攻击失去额外防御
                 pCompound.putFloat("ExtraArmor", pCompound.getFloat("ExtraArmor") - 1);

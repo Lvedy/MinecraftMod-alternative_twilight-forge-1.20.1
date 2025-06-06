@@ -24,7 +24,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import twilightforest.entity.ai.goal.LichShadowsGoal;
 import twilightforest.entity.boss.Lich;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Predicate;
 
 @Mixin(value = LichShadowsGoal.class, priority = 7)
@@ -33,6 +35,9 @@ public class LichShadowsGoalMixin extends Goal {
     private static final Predicate<Entity> IS_NOT_SELF = Entity::isAlive;
     @Shadow
     private Lich lich;
+    
+    @Unique
+    private final Map<BlockPos, BlockState> originalBlocks = new HashMap<>();
 
     @Inject(method = "tick", at = @At(value = "HEAD"))
     public void Tick(CallbackInfo ci){
@@ -51,13 +56,8 @@ public class LichShadowsGoalMixin extends Goal {
                 pCompound.putFloat("Obsidian", pCompound.getFloat("Obsidian") - 1);
             }
             if (pCompound.contains("Obsidian") && pCompound.getFloat("Obsidian") == 0) {
-                AABB aabb = this.lich.getBoundingBox().inflate(40);
-                for (BlockPos blockpos : BlockPos.betweenClosed(Mth.floor(aabb.minX), (int) this.lich.getY(), Mth.floor(aabb.minZ), Mth.floor(aabb.maxX), Mth.floor(aabb.maxY), Mth.floor(aabb.maxZ))) {
-                    BlockState blockstate = this.lich.level().getBlockState(blockpos);
-                    Block block = blockstate.getBlock();
-                    if (block == Blocks.OBSIDIAN)
-                        this.lich.level().setBlock(blockpos, Blocks.AIR.defaultBlockState(), 3);
-                }
+                // 恢复所有被替换的方块
+                restoreOriginalBlocks();
             } else if (pCompound.contains("Obsidian") && pCompound.getFloat("Obsidian") > 1)
                 pCompound.putFloat("Obsidian", pCompound.getFloat("Obsidian") - 1);
             if (this.lich.getSensing().hasLineOfSight(targetedEntity) && this.lich.getAttackCooldown() == 0 && dist < 20F) {
@@ -76,6 +76,8 @@ public class LichShadowsGoalMixin extends Goal {
                             BlockState blockstate = player.level().getBlockState(blockpos);
                             Block block = blockstate.getBlock();
                             if (block.defaultDestroyTime() >= 0) {
+                                // 保存原始方块状态
+                                originalBlocks.put(blockpos.immutable(), blockstate);
                                 player.level().setBlock(blockpos, Blocks.OBSIDIAN.defaultBlockState(), 3);
                             }
                         }
@@ -92,9 +94,31 @@ public class LichShadowsGoalMixin extends Goal {
             }
         }
     }
+    
+    @Unique
+    private void restoreOriginalBlocks() {
+        if (!originalBlocks.isEmpty()) {
+            for (Map.Entry<BlockPos, BlockState> entry : originalBlocks.entrySet()) {
+                this.lich.level().setBlock(entry.getKey(), entry.getValue(), 3);
+            }
+            originalBlocks.clear();
+        }
+    }
 
     @Override
     public boolean canUse() {
         return this.lich.getPhase() == 1;
+    }
+    
+    @Inject(method = "stop", at = @At("HEAD"))
+    public void onStop(CallbackInfo ci) {
+        // 当技能停止时恢复方块
+        if (ATModFinal.LichModify == 1) {
+            CompoundTag pCompound = this.lich.getPersistentData();
+            if (pCompound.contains("Obsidian") && pCompound.getFloat("Obsidian") > 0) {
+                pCompound.putFloat("Obsidian", 0);
+                restoreOriginalBlocks();
+            }
+        }
     }
 }
